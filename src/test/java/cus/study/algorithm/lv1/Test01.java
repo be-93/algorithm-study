@@ -9,7 +9,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 /**
- * 프로그래머스 - 2022 KAKAO BLIND RECRUITMENT 신고결과 받기
+ * 프로그래머스 - 2022 KAKAO BLIND RECRUITMENT 신고 결과 받기
  *
  * 정답 : [2,1,1,0]
  * String[] id_list = {"muzi", "frodo", "apeach", "neo"};
