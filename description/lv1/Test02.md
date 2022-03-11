@@ -4,4 +4,4 @@
 ![01.png](../../descriptionImages/lv1/test02/01.PNG)        
 
 ## 내가 풀어본 방식
-> :rocket: [source repository](/cus/study/algorithm/lv1/Test02.java)
+> :rocket: [source repository](/src/test/java/cus/study/algorithm/lv1/Test02.java)
