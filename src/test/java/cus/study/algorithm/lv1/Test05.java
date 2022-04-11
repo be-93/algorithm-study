@@ -28,5 +28,4 @@ public class Test05 {
                 .map(index -> !signs[index] ? absolutes[index] * -1 : absolutes[index])
                 .sum();
     }
-
 }
