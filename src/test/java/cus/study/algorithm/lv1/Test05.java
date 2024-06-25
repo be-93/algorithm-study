@@ -12,20 +12,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class Test05 {
 
-    @Test
-    public void case_01() {
-        int[] absolutes = {4, 7, 12};
-        boolean[] signs = {true, false, true};
-        int expected = 9;
+  @Test
+  public void case_01() {
+    int[] absolutes = {4, 7, 12};
+    boolean[] signs = {true, false, true};
+    int expected = 9;
 
-        int actual = solution(absolutes, signs);
+    int actual = solution(absolutes, signs);
 
-        assertThat(actual).isEqualTo(expected);
-    }
+    assertThat(actual).isEqualTo(expected);
+  }
 
-    public int solution(int[] absolutes, boolean[] signs) {
-        return IntStream.range(0, absolutes.length)
-                .map(index -> !signs[index] ? absolutes[index] * -1 : absolutes[index])
-                .sum();
-    }
+  public int solution(int[] absolutes, boolean[] signs) {
+    return IntStream.range(0, absolutes.length)
+        .map(index -> !signs[index] ? absolutes[index] * -1 : absolutes[index])
+        .sum();
+  }
 }
