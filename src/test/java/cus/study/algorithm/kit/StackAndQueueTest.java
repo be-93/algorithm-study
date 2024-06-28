@@ -2,11 +2,14 @@ package cus.study.algorithm.kit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 public class StackAndQueueTest {
@@ -80,11 +83,109 @@ public class StackAndQueueTest {
   public int 프로세스_solution(int[] priorities, int location) {
     int answer = 0;
 
-    Queue<Integer> deque = Arrays.stream(priorities)
+    List<Integer> list = Arrays.stream(priorities)
         .boxed()
-        .collect(Collectors.toCollection(LinkedList::new));
+        .collect(Collectors.toCollection(ArrayList::new));
+
+    int index = location;
+    int count = 0;
+
+    while (!list.isEmpty()) {
+      Integer number = list.remove(0);
+      index--;
+      boolean isMoveLast = false;
+
+      for (int i = 0; i < list.size(); i++) {
+        if (number < list.get(i)) {
+          isMoveLast = true;
+          break;
+        }
+      }
+
+      if (isMoveLast) {
+        list.add(number);
+        index = index < 0 ? list.size() - 1 : index;
+      }
+
+      if (!isMoveLast) {
+        count++;
+      }
+
+      if (!isMoveLast && index < 0) {
+        return count;
+      }
+    }
 
     return answer;
   }
+
+  @Test
+  void 다리를지나는트럭() {
+    int solution1 = this.다리를지나는트럭_solution(2, 10, new int[]{7, 4, 5, 6});
+    int solution2 = this.다리를지나는트럭_solution(100, 100, new int[]{10});
+    int solution3 = this.다리를지나는트럭_solution(100, 100,
+        new int[]{10, 10, 10, 10, 10, 10, 10, 10, 10, 10});
+
+    assertThat(solution1).isEqualTo(8);
+    assertThat(solution2).isEqualTo(101);
+    assertThat(solution3).isEqualTo(110);
+  }
+
+  public int 다리를지나는트럭_solution(int bridge_length, int weight, int[] truck_weights) {
+    int answer = 0;
+
+    Queue<Integer> trucks = Arrays.stream(truck_weights)
+        .boxed()
+        .collect(Collectors.toCollection(LinkedList::new));
+
+    Queue<Integer> bridge = Stream.generate(() -> 0)
+        .limit(bridge_length)
+        .collect(Collectors.toCollection(LinkedList::new));
+
+    while (!bridge.isEmpty()) {
+      answer++;
+      bridge.poll();
+
+      int sum = bridge.stream()
+          .mapToInt(Integer::intValue)
+          .sum();
+
+      int latestTruck = trucks.isEmpty() ? 0 : trucks.peek();
+
+      if (sum + latestTruck > weight) {
+        bridge.add(0);
+      } else if (!trucks.isEmpty()) {
+        bridge.add(trucks.poll());
+      }
+
+    }
+
+    return answer;
+  }
+
+  @Test
+  void 주식가격() {
+    int[] solution1 = this.주식가격_solution(new int[]{1, 2, 3, 2, 3});
+
+    assertThat(solution1).containsExactly(4, 3, 1, 1, 0);
+  }
+
+  public int[] 주식가격_solution(int[] prices) {
+    int[] answer = new int[prices.length];
+
+    for (int i = 0; i < prices.length - 1; i++) {
+      int time = 0;
+      int price = prices[i];
+      for (int j = i + 1; j < prices.length; j++) {
+        time++;
+        if (price > prices[j]) {
+          break;
+        }
+      }
+      answer[i] = time;
+    }
+    return answer;
+  }
+
 }
 
